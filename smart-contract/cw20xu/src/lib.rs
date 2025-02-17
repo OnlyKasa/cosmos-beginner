@@ -4,7 +4,6 @@ mod msg;
 mod query;
 mod receiver;
 
-pub use cw0::Expiration;
 
 pub use crate::coin::{Cw20Coin, Cw20CoinHuman};
 pub use crate::helpers::{Cw20CanonicalContract, Cw20Contract};

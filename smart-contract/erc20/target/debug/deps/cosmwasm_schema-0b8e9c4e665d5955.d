@@ -1,0 +1,10 @@
+C:\Users\quang\OneDrive\Documents\cosmos-beginner\smart-contract\erc20\target\debug\deps\libcosmwasm_schema-0b8e9c4e665d5955.rmeta: C:\Users\quang\.cargo\registry\src\index.crates.io-6f17d22bba15001f\cosmwasm-schema-0.11.2\src\lib.rs C:\Users\quang\.cargo\registry\src\index.crates.io-6f17d22bba15001f\cosmwasm-schema-0.11.2\src\casing.rs C:\Users\quang\.cargo\registry\src\index.crates.io-6f17d22bba15001f\cosmwasm-schema-0.11.2\src\export.rs C:\Users\quang\.cargo\registry\src\index.crates.io-6f17d22bba15001f\cosmwasm-schema-0.11.2\src\remove.rs
+
+C:\Users\quang\OneDrive\Documents\cosmos-beginner\smart-contract\erc20\target\debug\deps\libcosmwasm_schema-0b8e9c4e665d5955.rlib: C:\Users\quang\.cargo\registry\src\index.crates.io-6f17d22bba15001f\cosmwasm-schema-0.11.2\src\lib.rs C:\Users\quang\.cargo\registry\src\index.crates.io-6f17d22bba15001f\cosmwasm-schema-0.11.2\src\casing.rs C:\Users\quang\.cargo\registry\src\index.crates.io-6f17d22bba15001f\cosmwasm-schema-0.11.2\src\export.rs C:\Users\quang\.cargo\registry\src\index.crates.io-6f17d22bba15001f\cosmwasm-schema-0.11.2\src\remove.rs
+
+C:\Users\quang\OneDrive\Documents\cosmos-beginner\smart-contract\erc20\target\debug\deps\cosmwasm_schema-0b8e9c4e665d5955.d: C:\Users\quang\.cargo\registry\src\index.crates.io-6f17d22bba15001f\cosmwasm-schema-0.11.2\src\lib.rs C:\Users\quang\.cargo\registry\src\index.crates.io-6f17d22bba15001f\cosmwasm-schema-0.11.2\src\casing.rs C:\Users\quang\.cargo\registry\src\index.crates.io-6f17d22bba15001f\cosmwasm-schema-0.11.2\src\export.rs C:\Users\quang\.cargo\registry\src\index.crates.io-6f17d22bba15001f\cosmwasm-schema-0.11.2\src\remove.rs
+
+C:\Users\quang\.cargo\registry\src\index.crates.io-6f17d22bba15001f\cosmwasm-schema-0.11.2\src\lib.rs:
+C:\Users\quang\.cargo\registry\src\index.crates.io-6f17d22bba15001f\cosmwasm-schema-0.11.2\src\casing.rs:
+C:\Users\quang\.cargo\registry\src\index.crates.io-6f17d22bba15001f\cosmwasm-schema-0.11.2\src\export.rs:
+C:\Users\quang\.cargo\registry\src\index.crates.io-6f17d22bba15001f\cosmwasm-schema-0.11.2\src\remove.rs:

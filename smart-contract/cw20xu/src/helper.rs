@@ -1,4 +1,3 @@
-use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
 use cosmwasm_std::{
@@ -15,7 +14,7 @@ use crate::{
 /// for working with this.
 ///
 /// If you wish to persist this, convert to Cw20CanonicalContract via .canonical()
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 pub struct Cw20Contract(pub HumanAddr);
 
 impl Cw20Contract {
@@ -103,7 +102,7 @@ impl Cw20Contract {
 
 /// This is a respresentation of Cw20Contract for storage.
 /// Don't use it directly, just translate to the Cw20Contract when needed.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 pub struct Cw20CanonicalContract(pub CanonicalAddr);
 
 impl Cw20CanonicalContract {
