@@ -75,9 +75,6 @@ app.mm = module.NewManager(
 )
 ```
 
-
-
-
 ## ** IV. Các Binary Cosmos-SDK Phổ Biến & Đầy Đủ Nhất**
 
 | **Binary**  | **Dùng để làm gì?** | **Hỗ trợ IBC?** | **Hỗ trợ Smart Contract?** | **Hỗ trợ EVM?** |

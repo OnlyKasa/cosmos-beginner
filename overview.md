@@ -4,9 +4,20 @@
 
 Cosmos là một hệ sinh thái blockchain được thiết kế để giải quyết vấn đề về khả năng mở rộng, tính tương tác và sự phân mảnh của các mạng blockchain hiện nay. Được thành lập bởi Tendermint Inc., Cosmos cung cấp một bộ công cụ toàn diện giúp các nhà phát triển dễ dàng tạo ra blockchain tùy chỉnh và kết nối chúng với nhau thông qua giao thức Inter-Blockchain Communication (IBC). Cosmos được xem là một trong những giải pháp tiên tiến nhất nhằm thúc đẩy khả năng mở rộng của công nghệ blockchain, giúp nhiều dự án có thể vận hành một cách hiệu quả mà không gặp phải những hạn chế cố hữu của các nền tảng hiện có.
 
+![alt text](image.png)
+
+
 ### **Mục Tiêu Của Cosmos**
 
 Mục tiêu chính của Cosmos là tạo ra một "Internet của các blockchain", nơi các mạng blockchain có thể giao tiếp và tương tác một cách liền mạch mà không cần phụ thuộc vào một thực thể trung tâm. Điều này giúp giải quyết một số hạn chế quan trọng của các blockchain truyền thống như Ethereum và Bitcoin, vốn bị hạn chế về khả năng mở rộng và tính tương tác. Bằng cách sử dụng mô hình này, Cosmos giúp các blockchain có thể duy trì được tính bảo mật cao nhưng vẫn đảm bảo khả năng giao tiếp với nhau một cách hiệu quả, mở ra nhiều cơ hội cho các ứng dụng phi tập trung (DApps) và tài chính phi tập trung (DeFi).
+Hệ sinh thái Interchain trong thực tế:
+
+Khả năng các blockchain giao tiếp và trao đổi giá trị mà không cần dựa vào các sàn giao dịch trung ương hay làm giảm tính chủ quyền của chúng là một ý tưởng cách mạng.
+
+Ví dụ, một blockchain Cosmos có thể gửi token đến một blockchain trong mạng Polkadot qua IBC, cho phép người dùng truy cập các dịch vụ và thanh khoản mà không cần xác thực bên mạng Polkadot.
+Điều này tạo ra một thế giới đa chuỗi nơi các ứng dụng có thể tận dụng các đặc điểm tốt nhất của các blockchain khác nhau (chẳng hạn như bảo mật, khả năng mở rộng, quyền riêng tư hay tốc độ), đồng thời tránh được các hạn chế và sự tách biệt mà các blockchain truyền thống hay gặp phải.
+
+![alt text](image-1.png)
 
 ### **Cấu Trúc Cosmos**
 
@@ -84,11 +95,9 @@ Cosmos là một **mạng lưới phi tập trung** gồm nhiều blockchain k�
 | **Interchain Security (ICS)** | Cho phép các blockchain nhỏ sử dụng bảo mật từ Cosmos Hub |
 
 
-
-
 ---
 
-## **1️⃣ Tendermint Core - Cơ Chế Đồng Thuận**  
+## **1️ Tendermint Core - Cơ Chế Đồng Thuận**  
 
 🔹 **Tendermint Core** là giao thức đồng thuận **BFT (Byzantine Fault Tolerant)** được Cosmos sử dụng để đảm bảo sự an toàn và hiệu suất cao.  
 🔹 Nó giúp blockchain đạt finality nhanh, có thể xử lý hàng nghìn giao dịch mỗi giây (TPS).  
@@ -105,7 +114,7 @@ Cosmos là một **mạng lưới phi tập trung** gồm nhiều blockchain k�
 
 ---
 
-## **2️⃣ Cosmos SDK - Bộ Công Cụ Xây Dựng Blockchain**  
+## **2️ Cosmos SDK - Bộ Công Cụ Xây Dựng Blockchain**  
 
 🔹 **Cosmos SDK** là **framework mã nguồn mở**, giúp các nhà phát triển dễ dàng tạo blockchain tùy chỉnh.  
 🔹 Nó được sử dụng để xây dựng nhiều blockchain trong hệ sinh thái Cosmos như **Osmosis, Juno, Evmos, Axelar,...**  
@@ -122,7 +131,7 @@ Cosmos là một **mạng lưới phi tập trung** gồm nhiều blockchain k�
 
 ---
 
-## **3️⃣ IBC (Inter-Blockchain Communication) - Giao Thức Kết Nối Chuỗi**  
+## **3️ IBC (Inter-Blockchain Communication) - Giao Thức Kết Nối Chuỗi**  
 
 🔹 **IBC** là giao thức giúp các blockchain trong Cosmos **gửi và nhận tài sản hoặc dữ liệu mà không cần bên trung gian**.  
 🔹 Nó hoạt động theo mô hình **client-server**, sử dụng **light client** để xác thực trạng thái của các blockchain.  
@@ -139,7 +148,7 @@ Cosmos là một **mạng lưới phi tập trung** gồm nhiều blockchain k�
 
 ---
 
-## **4️⃣ Cosmos Hub - Trung Tâm Kết Nối Blockchain**  
+## **4️ Cosmos Hub - Trung Tâm Kết Nối Blockchain**  
 
 🔹 **Cosmos Hub** là blockchain đầu tiên trong hệ sinh thái Cosmos, được thiết kế để trở thành **"hub" trung tâm** kết nối các blockchain khác.  
 🔹 Nó sử dụng **IBC để giao tiếp với các "zone" (các blockchain khác).**  
@@ -152,7 +161,7 @@ Cosmos là một **mạng lưới phi tập trung** gồm nhiều blockchain k�
 
 ---
 
-## **5️⃣ Validators - Các Node Xác Thực Giao Dịch**  
+## **5️ Validators - Các Node Xác Thực Giao Dịch**  
 
 🔹 Validators là các node **chạy phần mềm Tendermint**, có trách nhiệm xác thực giao dịch và tạo block.  
 🔹 Người dùng có thể **ủy quyền (delegate) token của họ cho validators** để kiếm phần thưởng staking.  
@@ -165,7 +174,7 @@ Cosmos là một **mạng lưới phi tập trung** gồm nhiều blockchain k�
 
 ---
 
-## **6️⃣ Relayer - Máy Chủ Trung Gian Trong IBC**  
+## **6️ Relayer - Máy Chủ Trung Gian Trong IBC**  
 
 🔹 **Relayer** là các máy chủ giúp truyền tải dữ liệu và giao dịch giữa các blockchain thông qua IBC.  
 🔹 Mỗi giao dịch IBC **cần có một Relayer** để gửi bằng chứng từ blockchain này sang blockchain khác.  
@@ -179,7 +188,7 @@ Cosmos là một **mạng lưới phi tập trung** gồm nhiều blockchain k�
 
 ---
 
-## **7️⃣ Interchain Security - Bảo Mật Liên Chuỗi**  
+## **7️ Interchain Security - Bảo Mật Liên Chuỗi**  
 
 🔹 **Interchain Security (ICS)** là cơ chế bảo mật cho phép một blockchain nhỏ (Consumer Chain) **tận dụng các validator từ Cosmos Hub (Provider Chain)** để bảo vệ mạng lưới của mình.  
 🔹 Điều này giúp các blockchain mới **không cần tự xây dựng hệ thống validator** mà vẫn đảm bảo an ninh.  
