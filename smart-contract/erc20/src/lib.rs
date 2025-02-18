@@ -1,7 +1,9 @@
 use cosmwasm_std::{
-    entry_point, Binary, Deps, DepsMut, Env, MessageInfo, Response, StdResult, to_binary, Addr, StdError
+    entry_point, Binary, Deps, DepsMut, Env, MessageInfo, Response, StdResult, to_binary, Addr, StdError, Storage
 };
+use cosmwasm_storage::{singleton, singleton_read};
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 pub struct InstantiateMsg {
@@ -30,12 +32,19 @@ pub struct State {
     pub symbol: String,
     pub decimals: u8,
     pub total_supply: u128,
-    pub balances: std::collections::HashMap<String, u128>,
-    pub allowances: std::collections::HashMap<(String, String), u128>,
+    pub balances: HashMap<String, u128>,
+    pub allowances: HashMap<(String, String), u128>,
 }
 
-const CONTRACT_NAME: &str = "erc20-token";
-const CONTRACT_VERSION: &str = "0.1.0";
+const STATE_KEY: &[u8] = b"state";
+
+pub fn save_state(storage: &mut dyn Storage, state: &State) -> StdResult<()> {
+    singleton(storage, STATE_KEY).save(state)
+}
+
+pub fn load_state(storage: &dyn Storage) -> StdResult<State> {
+    singleton_read(storage, STATE_KEY).load()
+}
 
 #[entry_point]
 pub fn instantiate(
@@ -44,20 +53,19 @@ pub fn instantiate(
     info: MessageInfo,
     msg: InstantiateMsg,
 ) -> StdResult<Response> {
+    let mut balances = HashMap::new();
+    balances.insert(info.sender.to_string(), msg.initial_supply);
+
     let state = State {
         name: msg.name,
         symbol: msg.symbol,
         decimals: msg.decimals,
         total_supply: msg.initial_supply,
-        balances: std::collections::HashMap::new(),
-        allowances: std::collections::HashMap::new(),
+        balances,
+        allowances: HashMap::new(),
     };
 
-    let mut balances = state.clone().balances;
-    balances.insert(info.sender.to_string(), msg.initial_supply);
-
-    deps.storage.set(b"state", &serde_json::to_vec(&state).map_err(|e| StdError::generic_err(e.to_string()))?);
-
+    save_state(deps.storage, &state)?;
     Ok(Response::new().add_attribute("method", "instantiate"))
 }
 
@@ -81,23 +89,17 @@ fn execute_transfer(
     recipient: String,
     amount: u128,
 ) -> StdResult<Response> {
-    let serialized = deps.storage.get(b"state").ok_or(StdError::generic_err("State not found"))?;
-    let mut state: State = serde_json::from_slice(&serialized).map_err(|e| {
-        StdError::generic_err(format!("Failed to decode state: {}", e))
-    })?;
+    let mut state = load_state(deps.storage)?;
+    let sender_balance = state.balances.get(&info.sender.to_string()).cloned().unwrap_or(0);
 
-    let sender_balance = state.balances.get(&info.sender.to_string()).unwrap_or(&0);
-
-    if *sender_balance < amount {
+    if sender_balance < amount {
         return Err(StdError::generic_err("Insufficient funds"));
     }
 
     state.balances.insert(info.sender.to_string(), sender_balance - amount);
-    let recipient_balance = state.balances.get(&recipient).unwrap_or(&0);
+    let recipient_balance = state.balances.get(&recipient).cloned().unwrap_or(0);
     state.balances.insert(recipient, recipient_balance + amount);
-
-    let tmp = state.clone();
-    deps.storage.set(b"state", &serde_json::to_vec(&tmp).map_err(|e| StdError::generic_err(e.to_string()))?);
+    save_state(deps.storage, &state)?;
 
     Ok(Response::new().add_attribute("method", "transfer"))
 }
@@ -108,18 +110,11 @@ fn execute_approve(
     spender: String,
     amount: u128,
 ) -> StdResult<Response> {
-    let serialized = deps.storage.get(b"state").ok_or(StdError::generic_err("State not found"))?;
-    let mut state: State = serde_json::from_slice(&serialized).map_err(|e| {
-        StdError::generic_err(format!("Failed to decode state: {}", e))
-    })?;
-
-    state.allowances.insert((info.sender.to_string(), spender), amount);
-
-    deps.storage.set(b"state", &serde_json::to_vec(&state).map_err(|e| StdError::generic_err(e.to_string()))?);
-
+    let mut state = load_state(deps.storage)?;
+    state.allowances.insert((info.sender.to_string(), spender.clone()), amount);
+    save_state(deps.storage, &state)?;
     Ok(Response::new().add_attribute("method", "approve"))
 }
-
 
 fn execute_transfer_from(
     deps: DepsMut,
@@ -128,39 +123,25 @@ fn execute_transfer_from(
     recipient: String,
     amount: u128,
 ) -> StdResult<Response> {
-
-    let serialized = deps.storage.get(b"state").ok_or(StdError::generic_err("State not found"))?;
-    let mut state: State = serde_json::from_slice(&serialized).map_err(|e| {
-        StdError::generic_err(format!("Failed to decode state: {}", e))
-    })?;
-
-    let owner_balance = state.balances.get(&owner).unwrap_or(&0);
-
-    if *owner_balance < amount {
-        return Err(StdError::generic_err("Insufficient funds"));
-    }
-
-    let allowance = state.allowances.get(&(owner.clone(), info.sender.to_string())).unwrap_or(&0);
-
-    if *allowance < amount {
+    let mut state = load_state(deps.storage)?;
+    let allowance = state.allowances.get(&(owner.clone(), info.sender.to_string())).cloned().unwrap_or(0);
+    if allowance < amount {
         return Err(StdError::generic_err("Allowance exceeded"));
     }
-
+    let owner_balance = state.balances.get(&owner).cloned().unwrap_or(0);
+    if owner_balance < amount {
+        return Err(StdError::generic_err("Insufficient funds"));
+    }
+    state.allowances.insert((owner.clone(), info.sender.to_string()), allowance - amount);
     state.balances.insert(owner.clone(), owner_balance - amount);
-    let recipient_balance = state.balances.get(&recipient).unwrap_or(&0);
+    let recipient_balance = state.balances.get(&recipient).cloned().unwrap_or(0);
     state.balances.insert(recipient, recipient_balance + amount);
-
-    let new_allowance = allowance - amount;
-    state.allowances.insert((owner.clone(), info.sender.to_string()), new_allowance);
-
-    deps.storage.set(b"state", &serde_json::to_vec(&state).map_err(|e| StdError::generic_err(e.to_string()))?);
-
-
+    save_state(deps.storage, &state)?;
     Ok(Response::new().add_attribute("method", "transfer_from"))
 }
 
 #[entry_point]
-pub fn query(deps: Deps, env: Env, msg: QueryMsg) -> StdResult<Binary> {
+pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
     match msg {
         QueryMsg::BalanceOf { owner } => query_balance_of(deps, owner),
         QueryMsg::TotalSupply {} => query_total_supply(deps),
@@ -168,19 +149,12 @@ pub fn query(deps: Deps, env: Env, msg: QueryMsg) -> StdResult<Binary> {
 }
 
 fn query_balance_of(deps: Deps, owner: String) -> StdResult<Binary> {
-    let serialized = deps.storage.get(b"state").ok_or(StdError::generic_err("State not found"))?;
-    let state: State = serde_json::from_slice(&serialized).map_err(|e| {
-        StdError::generic_err(format!("Failed to decode state: {}", e))
-    })?;
-    let balance = state.balances.get(&owner).unwrap_or(&0);
+    let state = load_state(deps.storage)?;
+    let balance = state.balances.get(&owner).cloned().unwrap_or(0);
     to_binary(&balance)
 }
 
-
 fn query_total_supply(deps: Deps) -> StdResult<Binary> {
-    let serialized = deps.storage.get(b"state").ok_or(StdError::generic_err("State not found"))?;
-    let state: State = serde_json::from_slice(&serialized).map_err(|e| {
-        StdError::generic_err(format!("Failed to decode state: {}", e))
-    })?;
+    let state = load_state(deps.storage)?;
     to_binary(&state.total_supply)
 }

@@ -1,4 +1,6 @@
 ```bash
+# for fix error binary
+wasm-opt -Oz ./target/wasm32-unknown-unknown/release/contract.wasm  -o ./target/wasm32-unknown-unknown/release/contract.wasm
 cargo build --target wasm32-unknown-unknown --release
 ```
 
