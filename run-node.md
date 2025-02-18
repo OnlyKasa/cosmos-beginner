@@ -17,38 +17,38 @@ docker run --rm -it --mount type=bind,source=$(pwd)/template,target=/root cosmwa
 
 ## Run node
 
-
+Path = C:\Users\${user}\OneDrive\Documents\cosmos-beginner\sdk\wasmd
 ```
 
-docker run --rm -it -p 26657:26657 -p 26656:26656 -p 1317:1317 -v "C:\Users\quang\OneDrive\Documents\cosmos-beginner\sdk\wasmd\template:/root" cosmwasm/wasmd:latest  wasmd keys add validator
+docker run --rm -it -p 26657:26657 -p 26656:26656 -p 1317:1317 -v "C:\\cosmos-beginner\sdk\wasmd\template:/root" cosmwasm/wasmd:latest  wasmd keys add validator
 
 
-docker run --rm -it -p 26657:26657 -p 26656:26656 -p 1317:1317 -v "C:\Users\quang\OneDrive\Documents\cosmos-beginner\sdk\wasmd\template:/root" cosmwasm/wasmd:latest wasmd init --chain-id wasmd-testnet node01
+docker run --rm -it -p 26657:26657 -p 26656:26656 -p 1317:1317 -v "C:\\cosmos-beginner\sdk\wasmd\template:/root" cosmwasm/wasmd:latest wasmd init --chain-id wasmd-testnet node01
 
-docker run --rm -it -p 26657:26657 -p 26656:26656 -p 1317:1317 -v "C:\Users\quang\OneDrive\Documents\cosmos-beginner\sdk\wasmd\template:/root" cosmwasm/wasmd:latest  wasmd genesis add-genesis-account validator "90000000000stake,90000000000ucosm"
-
-
-
- docker run --rm -it -p 26657:26657 -p 26656:26656 -p 1317:1317 -v "C:\Users\quang\OneDrive\Documents\cosmos-beginner\sdk\wasmd\template:/root" cosmwasm/wasmd:latest wasmd genesis gentx validator "9000000000stake" --chain-id="wasmd-testnet" --amount="9000000000stake"
+docker run --rm -it -p 26657:26657 -p 26656:26656 -p 1317:1317 -v "C:\\cosmos-beginner\sdk\wasmd\template:/root" cosmwasm/wasmd:latest  wasmd genesis add-genesis-account validator "90000000000stake,90000000000ucosm"
 
 
- docker run --rm -it -p 26657:26657 -p 26656:26656 -p 1317:1317 -v "C:\Users\quang\OneDrive\Documents\cosmos-beginner\sdk\wasmd\template:/root" cosmwasm/wasmd:latest wasmd genesis collect-gentxs
+
+ docker run --rm -it -p 26657:26657 -p 26656:26656 -p 1317:1317 -v "C:\\cosmos-beginner\sdk\wasmd\template:/root" cosmwasm/wasmd:latest wasmd genesis gentx validator "9000000000stake" --chain-id="wasmd-testnet" --amount="9000000000stake"
+
+
+ docker run --rm -it -p 26657:26657 -p 26656:26656 -p 1317:1317 -v "C:\\cosmos-beginner\sdk\wasmd\template:/root" cosmwasm/wasmd:latest wasmd genesis collect-gentxs
 
 ```
 
 # update gas limit before
 
 ```
-docker run --rm -it -p 26657:26657 -p 26656:26656 -p 1317:1317 -v "C:\Users\quang\OneDrive\Documents\cosmos-beginner\sdk\wasmd\template:/root" cosmwasm/wasmd:latest wasmd start --rpc.laddr tcp://0.0.0.0:26657 --trace
+docker run --rm -it -p 26657:26657 -p 26656:26656 -p 1317:1317 -v "C:\\cosmos-beginner\sdk\wasmd\template:/root" cosmwasm/wasmd:latest wasmd start --rpc.laddr tcp://0.0.0.0:26657 --trace
 
-docker run --rm -it -p 26657:26657 -p 26656:26656 -p 1317:1317 -v "C:\Users\quang\OneDrive\Documents\cosmos-beginner\sdk\wasmd\template:/root" cosmwasm/wasmd:latest cat /root/.wasmd/config/genesis.json
+docker run --rm -it -p 26657:26657 -p 26656:26656 -p 1317:1317 -v "C:\\cosmos-beginner\sdk\wasmd\template:/root" cosmwasm/wasmd:latest cat /root/.wasmd/config/genesis.json
 ```
 
 
 
 ### deployment 
 
-docker cp "C:\Users\quang\OneDrive\Documents\cosmos-beginner\smart-contract\erc20\target\wasm32-unknown-unknown\release\erc20_contract.wasm" node1:/opt/erc20_contract.wasm
+docker cp "C:\\cosmos-beginner\smart-contract\erc20\target\wasm32-unknown-unknown\release\erc20_contract.wasm" node1:/opt/erc20_contract.wasm
 
 docker exec -it node1 wasmd tx wasm store erc20_contract.wasm --from validator --gas auto --gas-adjustment 1.5 --chain-id wasmd-testnet --yes
 
