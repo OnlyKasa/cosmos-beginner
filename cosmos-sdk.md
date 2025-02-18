@@ -1,3 +1,4 @@
+Tài liệu: https://docs.cosmos.network/v0.52/learn
 ## ** Cosmos SDK và Các Thành Phần Module**  
 
 Cosmos SDK là một **framework** giúp xây dựng blockchain tùy chỉnh. Nó dựa trên kiến trúc **modular**, nghĩa là các blockchain có thể chọn module nào cần dùng để tạo hệ thống phù hợp với nhu cầu của mình.  
@@ -5,13 +6,11 @@ Cosmos SDK là một **framework** giúp xây dựng blockchain tùy chỉnh. N�
 ---
 
 # **I. Cấu Trúc Cơ Bản của Cosmos SDK**
-Cosmos SDK gồm 3 phần chính:  
+Cosmos SDK gồm phần chính:  
  **Base Layer:** Các thành phần cốt lõi như Tendermint, ABCI.  
  **Modules:** Các tính năng tùy chọn như Staking, IBC, Governance, CosmWasm.  
  **Application:** Logic ứng dụng riêng của blockchain.  
- **Tendermint Core** → Xử lý **consensus**  
- **ABCI (Application Blockchain Interface)** → Giao tiếp giữa blockchain và ứng dụng  
- **Modules** → Cung cấp các chức năng quan trọng  
+
 
 ---
 
@@ -43,39 +42,6 @@ Cosmos SDK gồm 3 phần chính:
 
 # ** III. Cách Xây Dựng Blockchain Cosmos Tùy Chỉnh**
 Bạn có thể dùng Cosmos SDK để **tạo blockchain riêng** bằng cách chọn module phù hợp.  
-
-### ** 1. Cài đặt Cosmos SDK**
-```bash
-git clone https://github.com/cosmos/cosmos-sdk.git
-cd cosmos-sdk
-make install
-```
-
-### ** 2. Chỉnh sửa `app.go` để thêm module**
-Mở file `app/app.go` và **import module** bạn muốn:
-```go
-import (
-  "github.com/cosmos/cosmos-sdk/x/staking"
-  "github.com/cosmos/cosmos-sdk/x/slashing"
-  "github.com/cosmos/ibc-go/modules/core"
-  "github.com/CosmWasm/wasmd/x/wasm"
-)
-```
-
-Sau đó, thêm module vào **ModuleManager**:
-```go
-app.mm = module.NewManager(
-    auth.NewAppModule(app.accountKeeper),
-    bank.NewAppModule(app.bankKeeper),
-    staking.NewAppModule(app.stakingKeeper),
-    slashing.NewAppModule(app.slashingKeeper),
-    gov.NewAppModule(app.govKeeper),
-    wasm.NewAppModule(app.wasmKeeper),  // CosmWasm
-    ibc.NewAppModule(app.ibcKeeper),    // IBC
-)
-```
-
-## ** IV. Các Binary Cosmos-SDK Phổ Biến & Đầy Đủ Nhất**
 
 | **Binary**  | **Dùng để làm gì?** | **Hỗ trợ IBC?** | **Hỗ trợ Smart Contract?** | **Hỗ trợ EVM?** |
 |-------------|-------------------|----------------|----------------------|----------------|
